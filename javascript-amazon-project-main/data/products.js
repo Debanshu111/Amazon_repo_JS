@@ -108,7 +108,19 @@ function loadProducts() {
 
   //To load after sending
   xhr.addEventListener("load", () => {
-    console.log(xhr.response);
+    // console.log(xhr.response);
+    // JSON.parse(xhr.response);
+    // products = JSON.parse(xhr.response); //As Obj...needs convertion to class...
+    products = JSON.parse(xhr.response).map((productDetails) => {
+      if (productDetails.type === "clothing") {
+        return new Clothing(productDetails);
+      } else if (productDetails.type === "appliance") {
+        return new Appliance(productDetails);
+      } else {
+        return new Product(productDetails);
+      }
+    });
+    console.log(products);
   });
   xhr.open("GET", "https://supersimplebackend.dev/products");
   xhr.send(); //async, so it'll only send not wait for the request
