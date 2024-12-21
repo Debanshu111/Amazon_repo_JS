@@ -100,6 +100,22 @@ const toaster = new Appliance({
   warrantyLink: "images/appliance-warranty.png",
 });
 
+//From BACKEND
+export let products = [];
+
+function loadProducts() {
+  const xhr = new XMLHttpRequest(); //New Rqst Obj generated
+
+  //To load after sending
+  xhr.addEventListener("load", () => {
+    console.log(xhr.response);
+  });
+  xhr.open("GET", "https://supersimplebackend.dev/products");
+  xhr.send(); //async, so it'll only send not wait for the request
+}
+loadProducts();
+
+/*
 export const products = [
   {
     id: "e43638ce-6aa0-4b85-b27f-e1d07eb678c6",
@@ -632,3 +648,4 @@ export const products = [
 
 // Inside a method "this" points to outer Obj. but inside function it is undefined
 // Arrow Functions do not change the value of "this"
+*/
