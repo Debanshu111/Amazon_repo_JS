@@ -103,7 +103,7 @@ const toaster = new Appliance({
 //From BACKEND
 export let products = [];
 
-function loadProducts() {
+export function loadProducts(functionsBackEnd) {
   const xhr = new XMLHttpRequest(); //New Rqst Obj generated
 
   //To load after sending
@@ -120,12 +120,13 @@ function loadProducts() {
         return new Product(productDetails);
       }
     });
-    console.log(products);
+    // console.log(products);
+    functionsBackEnd(); //Callback- a function to run in future
   });
   xhr.open("GET", "https://supersimplebackend.dev/products");
   xhr.send(); //async, so it'll only send not wait for the request
 }
-loadProducts();
+// loadProducts();
 
 /*
 export const products = [

@@ -1,12 +1,16 @@
 import { cart, addToCart, calculateCartQuantity } from "../data/cart.js";
-import { products } from "../data/products.js";
+import { products, loadProducts } from "../data/products.js";
 import { formatCurrency } from "./utils/money.js";
 
-let productsHTML = "";
-products.forEach((product) => {
-  productsHTML =
-    productsHTML +
-    `<div class="product-container"> 
+loadProducts(renderProductsGrid); //for backend
+
+function renderProductsGrid() {
+  //renderProductsGrid() used for calling from the backend
+  let productsHTML = "";
+  products.forEach((product) => {
+    productsHTML =
+      productsHTML +
+      `<div class="product-container"> 
           <div class="product-image-container">
             <img class="product-image"
               src="${product.image}">
@@ -56,47 +60,48 @@ products.forEach((product) => {
             Add to Cart
           </button>
         </div>`;
-});
-
-document.querySelector(".js-products-grid").innerHTML = productsHTML;
-
-//UPDATE CART QUANTITY
-
-function updateCartQuantity() {
-  // let cartQuantity = 0;
-  // cart.forEach((cartItem) => {
-  //   cartQuantity = cartQuantity + cartItem.quantity;
-  // });
-  const cartQuantity = calculateCartQuantity();
-
-  document.querySelector(".js-cart-Quantity").innerHTML = cartQuantity;
-}
-
-//TIMEOUTS
-
-function popUpMessageTimeout(productId) {
-  //MESSAGE
-  const addedMssg = document.querySelector(`.js-added-to-cart-${productId}`);
-  addedMssg.classList.add("addedToCartMssg"); //used for registering it if clicked on add more than once for the same product...linked to below to check if it matches
-  //TIMEOUTS for Message
-  const addedMessageTimeouts = {};
-  const prevTimeoutId = addedMessageTimeouts[productId];
-  if (prevTimeoutId) {
-    clearTimeout(prevTimeoutId);
-  }
-  // setTimeout(() => {
-  const timeoutId = setTimeout(() => {
-    addedMssg.classList.remove("addedToCartMssg");
-  }, 3000);
-}
-
-updateCartQuantity(); //For updating always even on Amazon html page
-
-document.querySelectorAll(".addToCart").forEach((button) => {
-  button.addEventListener("click", () => {
-    const productId = button.dataset.productId; //dataset is used for DATA ATTRIBUTES
-    addToCart(productId);
-    updateCartQuantity();
-    popUpMessageTimeout(productId);
   });
-});
+
+  document.querySelector(".js-products-grid").innerHTML = productsHTML;
+
+  //UPDATE CART QUANTITY
+
+  function updateCartQuantity() {
+    // let cartQuantity = 0;
+    // cart.forEach((cartItem) => {
+    //   cartQuantity = cartQuantity + cartItem.quantity;
+    // });
+    const cartQuantity = calculateCartQuantity();
+
+    document.querySelector(".js-cart-Quantity").innerHTML = cartQuantity;
+  }
+
+  //TIMEOUTS
+
+  function popUpMessageTimeout(productId) {
+    //MESSAGE
+    const addedMssg = document.querySelector(`.js-added-to-cart-${productId}`);
+    addedMssg.classList.add("addedToCartMssg"); //used for registering it if clicked on add more than once for the same product...linked to below to check if it matches
+    //TIMEOUTS for Message
+    const addedMessageTimeouts = {};
+    const prevTimeoutId = addedMessageTimeouts[productId];
+    if (prevTimeoutId) {
+      clearTimeout(prevTimeoutId);
+    }
+    // setTimeout(() => {
+    const timeoutId = setTimeout(() => {
+      addedMssg.classList.remove("addedToCartMssg");
+    }, 3000);
+  }
+
+  updateCartQuantity(); //For updating always even on Amazon html page
+
+  document.querySelectorAll(".addToCart").forEach((button) => {
+    button.addEventListener("click", () => {
+      const productId = button.dataset.productId; //dataset is used for DATA ATTRIBUTES
+      addToCart(productId);
+      updateCartQuantity();
+      popUpMessageTimeout(productId);
+    });
+  });
+}
