@@ -121,6 +121,7 @@ export function loadProducts(functionsBackEnd) {
       }
     });
     // console.log(products);
+    console.log("Load products");
     functionsBackEnd(); //Callback- a function to run in future
   });
   xhr.open("GET", "https://supersimplebackend.dev/products");
