@@ -7,6 +7,29 @@ import { loadCart } from "../data/cart.js";
 // import "../data/cart-class.js";
 // import "../data/backend-practice.js";
 
+//In order to run all the promise simultaneously we use Promise.all()
+Promise.all([
+  //promise runs function immediately, helps to run multiple func. simultaneously, helps keeping code flat
+  // resolve lets us control when to go to next step
+  new Promise((resolve) => {
+    //async loadProducts, given callback
+    loadProducts(() => {
+      resolve("value1");
+    });
+  }),
+  new Promise((resolve) => {
+    loadCart(() => {
+      resolve();
+    });
+  }),
+]).then((values) => {
+  console.log(values);
+  renderCheckoutHeader();
+  renderOrderSummary();
+  renderPaymentSummary();
+});
+
+/*
 //promise runs function immediately, helps to run multiple func. simultaneously, helps keeping code flat
 // resolve lets us control when to go to next step
 new Promise((resolve) => {
@@ -30,6 +53,7 @@ new Promise((resolve) => {
     renderOrderSummary(); //For regenerating all the Html = MVC = (model-view-controller)
     renderPaymentSummary();
   });
+*/
 
 /* TRIAL
 
