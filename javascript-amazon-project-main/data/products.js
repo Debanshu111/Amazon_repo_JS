@@ -103,6 +103,35 @@ const toaster = new Appliance({
 //From BACKEND
 export let products = [];
 
+//FETCH
+
+function loadProductsFetch() {
+  const promise = fetch("https://supersimplebackend.dev/products")
+    .then((response) => {
+      console.log(response);
+      return response.json();
+    })
+    .then((productsData) => {
+      console.log(productsData); //as array
+      products = productsData.map((productDetails) => {
+        if (productDetails.type === "clothing") {
+          return new Clothing(productDetails);
+        } else if (productDetails.type === "appliance") {
+          return new Appliance(productDetails);
+        } else {
+          return new Product(productDetails);
+        }
+      });
+      console.log("Load products");
+    });
+  return promise;
+}
+loadProductsFetch().then(() => {
+  console.log("next step");
+});
+
+//XMLHTTPRequest
+
 export function loadProducts(functionsBackEnd) {
   const xhr = new XMLHttpRequest(); //New Rqst Obj generated
 
@@ -121,7 +150,7 @@ export function loadProducts(functionsBackEnd) {
       }
     });
     // console.log(products);
-    console.log("Load products");
+    // console.log("Load products");
     functionsBackEnd(); //Callback- a function to run in future
   });
   xhr.open("GET", "https://supersimplebackend.dev/products");
