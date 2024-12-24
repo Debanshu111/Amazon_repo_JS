@@ -23,7 +23,7 @@ Promise.all([
     });
   }),
 ]).then((values) => {
-  console.log(values);
+  // console.log(values);
   renderCheckoutHeader();
   renderOrderSummary();
   renderPaymentSummary();
