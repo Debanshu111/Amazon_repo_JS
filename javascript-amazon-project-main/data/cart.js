@@ -117,7 +117,7 @@ export function loadCart(functionsBackEnd) {
 
   //To load after sending
   xhr.addEventListener("load", () => {
-    console.log(xhr.response);
+    // console.log(xhr.response);
     // JSON.parse(xhr.response);
     // products = JSON.parse(xhr.response); //As Obj...needs convertion to class...
     // products = JSON.parse(xhr.response).map((productDetails) => {
