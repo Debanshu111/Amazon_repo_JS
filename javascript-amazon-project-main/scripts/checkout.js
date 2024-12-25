@@ -9,14 +9,15 @@ import { loadCart } from "../data/cart.js";
 
 //In order to run all the promise simultaneously we use Promise.all()
 Promise.all([
-  //promise runs function immediately, helps to run multiple func. simultaneously, helps keeping code flat
-  // resolve lets us control when to go to next step
-  new Promise((resolve) => {
-    //async loadProducts, given callback
-    loadProducts(() => {
-      resolve("value1");
-    });
-  }),
+  loadProductsFetch(),
+  // //promise runs function immediately, helps to run multiple func. simultaneously, helps keeping code flat
+  // // resolve lets us control when to go to next step
+  // new Promise((resolve) => {
+  //   //async loadProducts, given callback
+  //   loadProducts(() => {
+  //     resolve("value1");
+  //   });
+  // }),
   new Promise((resolve) => {
     loadCart(() => {
       resolve();
