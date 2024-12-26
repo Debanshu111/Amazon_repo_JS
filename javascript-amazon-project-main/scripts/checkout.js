@@ -5,8 +5,23 @@ import { loadProducts, loadProductsFetch } from "../data/products.js";
 import { loadCart } from "../data/cart.js";
 // import '../data/cart-oop.js';
 // import "../data/cart-class.js";
-// import "../data/backend-practice.js";
 
+//ASYNC = makes function return a promise
+//AWAIT = let's wait for a promise to finish before going to the next line, let's write async code like normal code
+async function loadPage() {
+  await loadProductsFetch();
+  await new Promise((resolve) => {
+    loadCart(() => {
+      resolve();
+    });
+  });
+  renderCheckoutHeader();
+  renderOrderSummary();
+  renderPaymentSummary();
+}
+loadPage();
+
+/*
 //In order to run all the promise simultaneously we use Promise.all()
 Promise.all([
   loadProductsFetch(),
@@ -29,6 +44,7 @@ Promise.all([
   renderOrderSummary();
   renderPaymentSummary();
 });
+*/
 
 /*
 //promise runs function immediately, helps to run multiple func. simultaneously, helps keeping code flat
