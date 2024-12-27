@@ -123,14 +123,13 @@ export function loadProductsFetch() {
         }
       });
       console.log("Load products");
+    })
+    .catch(() => {
+      console.log("unexpected error. please try again later");
     });
   return promise;
 }
-/*
-loadProductsFetch().then(() => {
-  console.log("next step");
-});
-*/
+// loadProductsFetch();
 
 //XMLHTTPRequest
 
@@ -155,6 +154,11 @@ export function loadProducts(functionsBackEnd) {
     // console.log("Load products");
     functionsBackEnd(); //Callback- a function to run in future
   });
+
+  xhr.addEventListener("error", (error) => {
+    console.log("unexpected error. please try again later");
+  }); //error handling
+  // xhr.open("GET", "https://error.supersimplebackend.dev/products");
   xhr.open("GET", "https://supersimplebackend.dev/products");
   xhr.send(); //async, so it'll only send not wait for the request
 }
