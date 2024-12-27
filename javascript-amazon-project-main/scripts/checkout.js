@@ -7,12 +7,12 @@ import { loadCart } from "../data/cart.js";
 // import "../data/cart-class.js";
 
 //ASYNC = makes function return a promise
-//AWAIT = let's wait for a promise to finish before going to the next line, let's write async code like normal code
+//AWAIT = let's wait for a promise to finish before going to the next line, let's write async code like normal code, for using await the async func has to be closest, inside resolve(the parameter can be directly saved)
 async function loadPage() {
   await loadProductsFetch();
-  await new Promise((resolve) => {
+  const value = await new Promise((resolve) => {
     loadCart(() => {
-      resolve();
+      resolve("value3");
     });
   });
   renderCheckoutHeader();
