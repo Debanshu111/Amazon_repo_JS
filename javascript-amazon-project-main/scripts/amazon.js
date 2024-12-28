@@ -67,10 +67,6 @@ function renderProductsGrid() {
   //UPDATE CART QUANTITY
 
   function updateCartQuantity() {
-    // let cartQuantity = 0;
-    // cart.forEach((cartItem) => {
-    //   cartQuantity = cartQuantity + cartItem.quantity;
-    // });
     const cartQuantity = calculateCartQuantity();
 
     document.querySelector(".js-cart-Quantity").innerHTML = cartQuantity;
@@ -81,24 +77,23 @@ function renderProductsGrid() {
   function popUpMessageTimeout(productId) {
     //MESSAGE
     const addedMssg = document.querySelector(`.js-added-to-cart-${productId}`);
-    addedMssg.classList.add("addedToCartMssg"); //used for registering it if clicked on add more than once for the same product...linked to below to check if it matches
+    addedMssg.classList.add("addedToCartMssg");
     //TIMEOUTS for Message
     const addedMessageTimeouts = {};
     const prevTimeoutId = addedMessageTimeouts[productId];
     if (prevTimeoutId) {
       clearTimeout(prevTimeoutId);
     }
-    // setTimeout(() => {
     const timeoutId = setTimeout(() => {
       addedMssg.classList.remove("addedToCartMssg");
     }, 3000);
   }
 
-  updateCartQuantity(); //For updating always even on Amazon html page
+  updateCartQuantity();
 
   document.querySelectorAll(".addToCart").forEach((button) => {
     button.addEventListener("click", () => {
-      const productId = button.dataset.productId; //dataset is used for DATA ATTRIBUTES
+      const productId = button.dataset.productId;
       addToCart(productId);
       updateCartQuantity();
       popUpMessageTimeout(productId);

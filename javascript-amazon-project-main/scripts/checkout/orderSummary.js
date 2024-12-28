@@ -7,7 +7,7 @@ import {
 } from "../../data/cart.js";
 import { products, getProduct } from "../../data/products.js";
 import { formatCurrency } from "../utils/money.js";
-import dayjs from "https://unpkg.com/dayjs@1.11.10/esm/index.js"; //Multiple scripts and naming conflicts can arrive so ESM version is used and default export has been done without usage of {}
+import dayjs from "https://unpkg.com/dayjs@1.11.10/esm/index.js";
 import {
   deliveryOptions,
   getDeliveryOption,
@@ -22,14 +22,11 @@ export function renderOrderSummary() {
 
   cart.forEach((cartItem) => {
     //Need to use Id to fetch the Product and its details::---
-    //getting productId out of the cartItem
     const productId = cartItem.productId;
 
     const matchingProduct = getProduct(productId);
 
-    //For Delivery Date on the product display, we take deliveryOptionId out of the cartItem and save it in a var
     const deliveryOptionId = cartItem.deliveryOptionId;
-    //To check if it is present in the cartItem
     const deliveryOption = getDeliveryOption(deliveryOptionId);
 
     const dateString = calculateDeliveryDate(deliveryOption);
