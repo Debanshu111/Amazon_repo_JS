@@ -1,5 +1,4 @@
-// export const cart = [
-export let cart; //Need to get cart from Local Storage but since Cart isn't sting normally so it's made back to array using JSON.parse
+export let cart;
 
 loadFromStorage();
 
@@ -37,26 +36,23 @@ export function addToCart(productId) {
       matchingItem = cartItem;
     }
   });
-  // console.log(productId);
 
   //QUANTITY DROPDOWN
   const quantitySelector = document.querySelector(
     `.js-quantity-selector-${productId}`
   );
   const quantity = Number(quantitySelector.value);
-  //Cart Item already in Cart?
   if (matchingItem) {
     matchingItem.quantity = matchingItem.quantity + quantity;
   } else {
     cart.push({
       productId: productId,
       quantity: quantity,
-      deliveryOptionId: "1", //used  1 for now...need to change later
+      deliveryOptionId: "1",
     });
   }
   saveToStorage();
 }
-// console.log(cart);
 
 //REMOVE FROM CART FUNCTION
 
