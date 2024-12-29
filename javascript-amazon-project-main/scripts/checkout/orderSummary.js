@@ -128,8 +128,8 @@ export function renderOrderSummary() {
       // ); //To select the specific container we need and saving into a variable
       // container.remove();
       renderOrderSummary();
-      updateCheckoutQuantityDisplay(); //problem fixed with updating instantly on deleting
-      renderPaymentSummary(); //regenerate all the html for payment
+      updateCheckoutQuantityDisplay();
+      renderPaymentSummary();
     });
   });
 
@@ -142,9 +142,9 @@ export function renderOrderSummary() {
     // });
     const cartQuantity = calculateCartQuantity();
 
-    document.querySelector(".js-return-to-home-link").innerHTML =
-      // cartQuantity; //only number was popping, we needed to write 'items' too
-      `${cartQuantity} items`;
+    document.querySelector(
+      ".js-return-to-home-link"
+    ).innerHTML = `${cartQuantity} items`;
   }
   updateCheckoutQuantityDisplay();
 
@@ -152,12 +152,11 @@ export function renderOrderSummary() {
   document.querySelectorAll(".js-update-link").forEach((link) => {
     link.addEventListener("click", () => {
       // console.log("update");
-      const productId = link.dataset.productId; //dataset is used for DATA ATTRIBUTES
+      const productId = link.dataset.productId;
       // console.log(productId);
       const container = document.querySelector(
         `.js-cart-item-container-${productId}`
       ); //To select the specific container we need and saving into a variable
-      // console.log(container);
       container.classList.add("is-updating-quantity");
     });
   });
@@ -165,9 +164,7 @@ export function renderOrderSummary() {
   //SAVE LINK
   document.querySelectorAll(".js-save-link").forEach((link) => {
     link.addEventListener("click", () => {
-      // console.log("save");
       const productId = link.dataset.productId; //dataset is used for DATA ATTRIBUTES
-      // console.log(productId);
       //post input quantity...save it
       const quantityInput = document.querySelector(
         `.js-quantity-input-${productId}`
@@ -196,14 +193,13 @@ export function renderOrderSummary() {
   //For each individual radio button click we need to display on the checkout item
   document.querySelectorAll(".js-delivery-option").forEach((element) => {
     element.addEventListener("click", () => {
-      // const { productId, deliveryOptionId } = element.dataset; shorthand property
       const productId = element.dataset.productId;
       const deliveryOptionId = element.dataset.deliveryOptionId;
 
-      updateDeliveryOption(productId, deliveryOptionId); //update the deliveryOptionId in the cart
+      updateDeliveryOption(productId, deliveryOptionId);
       renderCheckoutHeader();
-      renderOrderSummary(); //To render it instantaneously, fucntion calling/re-running itself = RECURSION
-      renderPaymentSummary(); //generate updated shipping payments
+      renderOrderSummary();
+      renderPaymentSummary();
     });
   });
 }
