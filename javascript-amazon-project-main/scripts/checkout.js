@@ -9,12 +9,21 @@ import { loadCart } from "../data/cart.js";
 //ASYNC = makes function return a promise
 //AWAIT = let's wait for a promise to finish before going to the next line, let's write async code like normal code, for using await the async func has to be closest, inside resolve(the parameter can be directly saved)
 async function loadPage() {
-  await loadProductsFetch();
-  const value = await new Promise((resolve) => {
-    loadCart(() => {
-      resolve("value3");
+  try {
+    // throw "error1"; //creates error, skips rest and goes to catch
+    await loadProductsFetch();
+    const value = await new Promise((resolve, reject) => {
+      // throw "error2";
+      loadCart(() => {
+        // reject("error3"); //function that helps create an error in future
+        resolve("value3");
+      });
     });
-  });
+  } catch (error) {
+    console.log("unexpected error. please try again later");
+  } //any error detected inside try will be detected by catch
+  //can use try catch with synchronous code...not used everywhere because it is used only for unexpected error handling
+
   renderCheckoutHeader();
   renderOrderSummary();
   renderPaymentSummary();
