@@ -39,7 +39,6 @@ class Product {
 //use of inheritence  [child and parent class]
 class Clothing extends Product {
   sizeChartLink;
-  //setup code(constructor)
   constructor(productDetails) {
     //calling from the parent class = super()
     super(productDetails);
@@ -50,7 +49,6 @@ class Clothing extends Product {
     return `
     <a href="${this.sizeChartLink}" target="_blank">Size Chart</a>
     `;
-    //target helps in opening it into a new tab
   }
 }
 

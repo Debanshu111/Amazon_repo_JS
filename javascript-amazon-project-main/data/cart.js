@@ -24,7 +24,7 @@ export function loadFromStorage() {
 //LOCAL STORAGE FUNCTION
 
 export function saveToStorage() {
-  localStorage.setItem("cart", JSON.stringify(cart)); //Saving to local storage(only saves strings, so cart has been converted to string)
+  localStorage.setItem("cart", JSON.stringify(cart));
 }
 
 //ADD TO CART FUNCTION
@@ -69,7 +69,7 @@ export function removeFromCart(productId) {
   saveToStorage();
 }
 
-//CALCULATE CART QUANTITY FUNCTION used at multiple files, to optiimize
+//CALCULATE CART QUANTITY FUNCTION
 export function calculateCartQuantity() {
   let cartQuantity = 0;
   cart.forEach((cartItem) => {
