@@ -31,7 +31,6 @@ loadPage();
 Promise.all([
   loadProductsFetch(),
   // new Promise((resolve) => {
-  //   //async loadProducts, given callback
   //   loadProducts(() => {
   //     resolve();
   //   });
