@@ -113,20 +113,8 @@ export function loadCart(functionsBackEnd) {
 
   //To load after sending
   xhr.addEventListener("load", () => {
-    // console.log(xhr.response);
+    console.log(xhr.response);
     // JSON.parse(xhr.response);
-    // products = JSON.parse(xhr.response); //As Obj...needs convertion to class...
-    // products = JSON.parse(xhr.response).map((productDetails) => {
-    //   if (productDetails.type === "clothing") {
-    //     return new Clothing(productDetails);
-    //   } else if (productDetails.type === "appliance") {
-    //     return new Appliance(productDetails);
-    //   } else {
-    //     return new Product(productDetails);
-    //   }
-    // });
-    // console.log(products);
-    // console.log("Load products");
     functionsBackEnd(); //Callback- a function to run in future
   });
   xhr.open("GET", "https://supersimplebackend.dev/cart");

@@ -36,11 +36,9 @@ class Product {
   }
 }
 
-//use of inheritence  [child and parent class]
 class Clothing extends Product {
   sizeChartLink;
   constructor(productDetails) {
-    //calling from the parent class = super()
     super(productDetails);
     this.sizeChartLink = productDetails.sizeChartLink;
   }
@@ -65,7 +63,6 @@ class Appliance extends Product {
     <a href="${this.instructionsLink}" target="_blank">Instruction Manual</a>
     <a href="${this.warrantyLink}" target="_blank">Warranty Details</a>
     `;
-    //target helps in opening it into a new tab
   }
 }
 
@@ -106,11 +103,11 @@ export let products = [];
 export function loadProductsFetch() {
   const promise = fetch("https://supersimplebackend.dev/products")
     .then((response) => {
-      console.log(response);
+      // console.log(response);
       return response.json();
     })
     .then((productsData) => {
-      console.log(productsData); //as array
+      // console.log(productsData); //as array
       products = productsData.map((productDetails) => {
         if (productDetails.type === "clothing") {
           return new Clothing(productDetails);
@@ -120,14 +117,13 @@ export function loadProductsFetch() {
           return new Product(productDetails);
         }
       });
-      console.log("Load products");
+      // console.log("Load products");
     })
-    .catch(() => {
+    .catch((error) => {
       console.log("unexpected error. please try again later");
     });
   return promise;
 }
-// loadProductsFetch();
 
 //XMLHTTPRequest
 
@@ -136,9 +132,6 @@ export function loadProducts(functionsBackEnd) {
 
   //To load after sending
   xhr.addEventListener("load", () => {
-    // console.log(xhr.response);
-    // JSON.parse(xhr.response);
-    // products = JSON.parse(xhr.response); //As Obj...needs convertion to class...
     products = JSON.parse(xhr.response).map((productDetails) => {
       if (productDetails.type === "clothing") {
         return new Clothing(productDetails);
@@ -148,21 +141,13 @@ export function loadProducts(functionsBackEnd) {
         return new Product(productDetails);
       }
     });
-    // console.log(products);
-    // console.log("Load products");
-    functionsBackEnd(); //Callback- a function to run in future
+    functionsBackEnd(); //callback from amazon.js(renderProductsGrid)
   });
-
-  xhr.addEventListener("error", (error) => {
-    console.log("unexpected error. please try again later");
-  }); //error handling
-  // xhr.open("GET", "https://error.supersimplebackend.dev/products");
   xhr.open("GET", "https://supersimplebackend.dev/products");
-  xhr.send(); //async, so it'll only send not wait for the request
+  xhr.send();
 }
-// loadProducts();
 
-/*
+/* For running without backend
 export const products = [
   {
     id: "e43638ce-6aa0-4b85-b27f-e1d07eb678c6",
@@ -683,7 +668,6 @@ export const products = [
     priceCents: 2999,
   },
 ].map((productDetails) => {
-  //To make it an array method //map loops through array
   if (productDetails.type === "clothing") {
     return new Clothing(productDetails);
   } else if (productDetails.type === "appliance") {
@@ -692,7 +676,4 @@ export const products = [
     return new Product(productDetails);
   }
 });
-
-// Inside a method "this" points to outer Obj. but inside function it is undefined
-// Arrow Functions do not change the value of "this"
 */
