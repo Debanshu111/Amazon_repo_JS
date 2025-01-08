@@ -2,10 +2,9 @@ import { cart, addToCart, calculateCartQuantity } from "../data/cart.js";
 import { products, loadProducts } from "../data/products.js";
 import { formatCurrency } from "./utils/money.js";
 
-loadProducts(renderProductsGrid); //for backend
+loadProducts(renderProductsGrid); //saved the inner function inside parameter named functionsBackEnd
 
 function renderProductsGrid() {
-  //renderProductsGrid() used for calling from the backend
   let productsHTML = "";
   products.forEach((product) => {
     productsHTML =
