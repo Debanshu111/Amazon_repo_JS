@@ -6,6 +6,7 @@ import { formatCurrency } from "../utils/money.js";
 export function renderPaymentSummary() {
   let productPriceCents = 0;
   let shippingPriceCents = 0;
+  // let placeOrderConfirmnationDialog = false;
   cart.forEach((cartItem) => {
     //For Product's COST
     const product = getProduct(cartItem.productId);
@@ -58,9 +59,26 @@ export function renderPaymentSummary() {
             )}</div>
           </div>
 
-          <button class="place-order-button button-primary">
+          <button class="place-order-button button-primary js-place-order-button">
             Place your order
           </button>`;
 
   document.querySelector(".js-payment-summary").innerHTML = paymentSummaryHTML;
+
+  document
+    .querySelector(".js-place-order-button")
+    .addEventListener("click", async () => {
+      // alert("Thank you for your order!");
+      const response = await fetch("https://supersimplebackend.dev/orders", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        // body: JSON.stringify(cart), //error about cart not being an array, so can't use
+        body: JSON.stringify({ cart: cart }),
+      });
+      //To get the response data from the server
+      const order = await response.json();
+      console.log(order);
+    });
 }
