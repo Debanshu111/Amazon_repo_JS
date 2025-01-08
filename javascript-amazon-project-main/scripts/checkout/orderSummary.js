@@ -19,12 +19,21 @@ import { renderCheckoutHeader } from "./checkoutHeader.js";
 //To load the delivery Date option from the radio button options instantaneously, we need to re-run the HTML, so put it in a function
 export function renderOrderSummary() {
   let cartSummaryHTML = "";
+  let isloader = true;
 
   cart.forEach((cartItem) => {
     //Need to use Id to fetch the Product and its details::---
     const productId = cartItem.productId;
 
     const matchingProduct = getProduct(productId);
+    if (matchingProduct.id) {
+      isloader = false;
+    } else {
+      isloader = true;
+    }
+    // console.log(typeof matchingProduct);
+    // console.log(matchingProduct.id);
+    // console.log(cartItem);
 
     const deliveryOptionId = cartItem.deliveryOptionId;
     const deliveryOption = getDeliveryOption(deliveryOptionId);
@@ -81,6 +90,7 @@ export function renderOrderSummary() {
               </div>
             </div>`;
   });
+  // console.log(isloader);
 
   function deliveryOptionsHTML(matchingProduct, cartItem) {
     let html = "";
@@ -115,7 +125,12 @@ export function renderOrderSummary() {
     return html;
   }
 
-  document.querySelector(".js-order-summary").innerHTML = cartSummaryHTML;
+  document.querySelector(".js-order-summary").innerHTML =
+    isloader && cart.length !== 0
+      ? '<div class="loader"></div> '
+      : cart.length === 0
+      ? `<h1>No Data Found</h1>`
+      : cartSummaryHTML;
 
   //DELETE LINK //How to know which product to remove from cart -- attach products' id to link element...used above
 
