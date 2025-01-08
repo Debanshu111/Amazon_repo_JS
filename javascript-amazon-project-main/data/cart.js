@@ -113,8 +113,6 @@ export function loadCart(functionsBackEnd) {
 
   //To load after sending
   xhr.addEventListener("load", () => {
-    console.log(xhr.response);
-    // JSON.parse(xhr.response);
     functionsBackEnd(); //Callback- a function to run in future
   });
   xhr.open("GET", "https://supersimplebackend.dev/cart");

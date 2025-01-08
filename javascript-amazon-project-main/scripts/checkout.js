@@ -6,20 +6,21 @@ import { loadCart } from "../data/cart.js";
 // import '../data/cart-oop.js';
 // import "../data/cart-class.js";
 
+//ASYNC-AWAIT used:-
+
 async function loadPage() {
   try {
-    // throw "error1"; //creates error, skips rest and goes to catch
     await loadProductsFetch();
     const value = await new Promise((resolve, reject) => {
       // throw "error2";
       loadCart(() => {
-        resolve("value3");
+        reject("error3");
+        // resolve("value3");
       });
     });
   } catch (error) {
-    console.log("unexpected error. please try again later");
-  } //any error detected inside try will be detected by catch
-  //can use try catch with synchronous code...not used everywhere because it is used only for unexpected error handling
+    // console.log("unexpected error. please try again later");
+  }
 
   renderCheckoutHeader();
   renderOrderSummary();
@@ -27,7 +28,8 @@ async function loadPage() {
 }
 loadPage();
 
-/*
+/*  Load Products using Promise and Fetch:-
+
 Promise.all([
   loadProductsFetch(),
   // new Promise((resolve) => {
