@@ -2,26 +2,37 @@ import { cart, calculateCartQuantity } from "../data/cart.js";
 import { products } from "../data/products.js";
 // import { renderCheckoutHeader } from "./checkout/checkoutHeader.js";
 import { renderOrderSummary } from "./checkout/orderSummary.js";
-import {
-  renderPaymentSummary,
-  renderFinalOrderPaymentSummary,
-} from "./checkout/paymentSummary.js";
+import { renderFinalOrderPaymentSummary } from "./checkout/paymentSummary.js";
 import dayjs from "https://unpkg.com/dayjs@1.11.10/esm/index.js";
 
 import { loadCart } from "../data/cart.js";
 
-//DATE
 document.addEventListener("DOMContentLoaded", () => {
+  //DATE
   const currentDate = dayjs().format("MMMM D, YYYY");
   document.getElementById("current-date").textContent = currentDate;
+  //AMOUNT
+  const orderTotalAmount = document.getElementById("order-total-amount");
+  orderTotalAmount.innerHTML = renderFinalOrderPaymentSummary();
+  //ORDER ID
+  const uniqueOrderId = document.getElementById("unique-order-id");
+  uniqueOrderId.innerHTML = Math.floor(Math.random() * 1000000);
+
+  //     // Load the generated HTML from localStorage and insert it into the element
+  //   const yourOrdersSummaryHTML = localStorage.getItem("yourOrdersSummaryHTML");
+  //   document.querySelector(".js-your-orders-summary").innerHTML = yourOrdersSummaryHTML;
+
+  // CART ICON
+  updateCartQuantity();
 });
-//AMOUNT
-const orderTotalAmount = document.getElementById("order-total-amount");
-orderTotalAmount.innerHTML = renderFinalOrderPaymentSummary();
-//ORDER ID
-const uniqueOrderId = document.getElementById("unique-order-id");
-uniqueOrderId.innerHTML = Math.floor(Math.random() * 1000000);
-//FUNCTION
+
+//FUNCTIONs
+
+function updateCartQuantity() {
+  const cartQuantity = calculateCartQuantity();
+  document.querySelector(".js-cart-Quantity").innerHTML = cartQuantity;
+}
+
 export function displayYourOrders() {
   let yourOrdersSummaryHTML = "";
 
@@ -71,6 +82,5 @@ export function displayYourOrders() {
   document.querySelector(".js-your-orders-summary").innerHTML =
     yourOrdersSummaryHTML;
 
-  const cartQuantity = calculateCartQuantity();
-  document.querySelector(".js-cart-Quantity").innerHTML = cartQuantity;
+  updateCartQuantity();
 }
