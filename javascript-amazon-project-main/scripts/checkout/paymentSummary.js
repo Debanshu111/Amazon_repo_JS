@@ -7,22 +7,19 @@ import { addOrder } from "../../data/orders.js";
 export function renderPaymentSummary() {
   let productPriceCents = 0;
   let shippingPriceCents = 0;
-  // let placeOrderConfirmnationDialog = false;
   cart.forEach((cartItem) => {
     //For Product's COST
     const product = getProduct(cartItem.productId);
     productPriceCents =
-      productPriceCents + product.priceCents * cartItem.quantity;
+      productPriceCents + product?.priceCents * cartItem.quantity;
     //For Shipping COST
     const deliveryOption = getDeliveryOption(cartItem.deliveryOptionId);
-    shippingPriceCents = shippingPriceCents + deliveryOption.priceCents;
+    shippingPriceCents = shippingPriceCents + deliveryOption?.priceCents;
   });
-
   //For the rest calculations
   const totalBeforeTaxCents = productPriceCents + shippingPriceCents;
   const taxCents = (totalBeforeTaxCents * 0.1).toFixed(2);
   const totalCents = Number(totalBeforeTaxCents) + Number(taxCents);
-
   const paymentSummaryHTML = `<div class="payment-summary-title">Order Summary</div>
 
           <div class="payment-summary-row">
@@ -88,4 +85,23 @@ export function renderPaymentSummary() {
       }
       window.location.href = "orders.html";
     });
+}
+
+export function renderFinalOrderPaymentSummary() {
+  let productPriceCents = 0;
+  let shippingPriceCents = 0;
+  cart.forEach((cartItem) => {
+    //For Product's COST
+    const product = getProduct(cartItem.productId);
+    productPriceCents =
+      productPriceCents + product?.priceCents * cartItem.quantity;
+    //For Shipping COST
+    const deliveryOption = getDeliveryOption(cartItem.deliveryOptionId);
+    shippingPriceCents = shippingPriceCents + deliveryOption?.priceCents;
+  });
+  //For the rest calculations
+  const totalBeforeTaxCents = productPriceCents + shippingPriceCents;
+  const taxCents = (totalBeforeTaxCents * 0.1).toFixed(2);
+  const totalCents = Number(totalBeforeTaxCents) + Number(taxCents);
+  return `$${formatCurrency(totalCents)}`;
 }

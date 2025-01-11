@@ -16,9 +16,11 @@ import {
 import { renderPaymentSummary } from "./paymentSummary.js";
 import { renderCheckoutHeader } from "./checkoutHeader.js";
 
+export let cartSummaryHTML = "";
+
 //To load the delivery Date option from the radio button options instantaneously, we need to re-run the HTML, so put it in a function
 export function renderOrderSummary() {
-  let cartSummaryHTML = "";
+  cartSummaryHTML = "";
   let isloader = true;
 
   cart.forEach((cartItem) => {
@@ -26,71 +28,68 @@ export function renderOrderSummary() {
     const productId = cartItem.productId;
 
     const matchingProduct = getProduct(productId);
-    if (matchingProduct.id) {
+    if (matchingProduct && matchingProduct.id) {
       isloader = false;
     } else {
       isloader = true;
     }
-    // console.log(typeof matchingProduct);
-    // console.log(matchingProduct.id);
-    // console.log(cartItem);
 
-    const deliveryOptionId = cartItem.deliveryOptionId;
-    const deliveryOption = getDeliveryOption(deliveryOptionId);
+    if (matchingProduct) {
+      const deliveryOptionId = cartItem.deliveryOptionId;
+      const deliveryOption = getDeliveryOption(deliveryOptionId);
+      const dateString = calculateDeliveryDate(deliveryOption);
 
-    const dateString = calculateDeliveryDate(deliveryOption);
-
-    cartSummaryHTML =
-      cartSummaryHTML +
-      `<div class="cart-item-container js-cart-item-container-${
-        matchingProduct.id
-      }">
-              <div class="delivery-date">Delivery date: ${dateString}</div>
-              <div class="cart-item-details-grid">
-                <img
-                  class="product-image"
-                  src="${matchingProduct.image}"
-                />
-                <div class="cart-item-details">
-                  <div class="product-name">${matchingProduct.name}</div>
-                  <div class="product-price">${matchingProduct.getPrice()}</div>
-                  <div class="product-quantity">
-                    <span> Quantity: 
-                      <span class="quantity-label js-quantity-label-${
+      cartSummaryHTML =
+        cartSummaryHTML +
+        `<div class="cart-item-container js-cart-item-container-${
+          matchingProduct.id
+        }">
+                <div class="delivery-date">Delivery date: ${dateString}</div>
+                <div class="cart-item-details-grid">
+                  <img
+                    class="product-image"
+                    src="${matchingProduct.image}"
+                  />
+                  <div class="cart-item-details">
+                    <div class="product-name">${matchingProduct.name}</div>
+                    <div class="product-price">${matchingProduct.getPrice()}</div>
+                    <div class="product-quantity">
+                      <span> Quantity: 
+                        <span class="quantity-label js-quantity-label-${
+                          matchingProduct.id
+                        }">${cartItem.quantity}</span> 
+                      </span> 
+                      <span class="update-quantity-link link-primary js-update-link" data-product-id="${
                         matchingProduct.id
-                      }">${cartItem.quantity}</span> 
-                    </span> 
-                    <span class="update-quantity-link link-primary js-update-link" data-product-id="${
-                      matchingProduct.id
-                    }">
-                      Update
-                    </span>
-                    <input class="quantity-input js-quantity-input-${
-                      matchingProduct.id
-                    }">
-                    <span class="save-quantity-link link-primary js-save-link" data-product-id="${
-                      matchingProduct.id
-                    }">
-                      Save
-                    </span>
-                    <span class="delete-quantity-link link-primary js-delete-link" data-product-id="${
-                      matchingProduct.id
-                    }">
-                      Delete
-                    </span>
+                      }">
+                        Update
+                      </span>
+                      <input class="quantity-input js-quantity-input-${
+                        matchingProduct.id
+                      }">
+                      <span class="save-quantity-link link-primary js-save-link" data-product-id="${
+                        matchingProduct.id
+                      }">
+                        Save
+                      </span>
+                      <span class="delete-quantity-link link-primary js-delete-link" data-product-id="${
+                        matchingProduct.id
+                      }">
+                        Delete
+                      </span>
+                    </div>
+                  </div>
+    
+                  <div class="delivery-options">
+                    <div class="delivery-options-title">
+                      Choose a delivery option:
+                    </div>
+                    ${deliveryOptionsHTML(matchingProduct, cartItem)}
                   </div>
                 </div>
-  
-                <div class="delivery-options">
-                  <div class="delivery-options-title">
-                    Choose a delivery option:
-                  </div>
-                  ${deliveryOptionsHTML(matchingProduct, cartItem)}
-                </div>
-              </div>
-            </div>`;
+              </div>`;
+    }
   });
-  // console.log(isloader);
 
   function deliveryOptionsHTML(matchingProduct, cartItem) {
     let html = "";
@@ -156,10 +155,10 @@ export function renderOrderSummary() {
     //   cartQuantity = cartQuantity + cartItem.quantity;
     // });
     const cartQuantity = calculateCartQuantity();
-
-    document.querySelector(
-      ".js-return-to-home-link"
-    ).innerHTML = `${cartQuantity} items`;
+    const returnToHomeLink = document.querySelector(".js-return-to-home-link");
+    if (returnToHomeLink) {
+      returnToHomeLink.innerHTML = `${cartQuantity} items`;
+    }
   }
   updateCheckoutQuantityDisplay();
 
