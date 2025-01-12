@@ -76,6 +76,7 @@ export function calculateCartQuantity() {
     cartQuantity = cartQuantity + cartItem.quantity;
   });
   return cartQuantity;
+  // return cart.reduce((total, cartItem) => total + cartItem.quantity, 0);
 }
 
 //UPDATE QUANTITY FUNCTION
