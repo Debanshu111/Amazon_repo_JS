@@ -50,6 +50,7 @@ export function displayFinalOrderPaymentTotal() {
 export function displayYourOrders() {
   let yourOrdersSummaryHTML = "";
 
+  // if typeof cart is not an array, then console.error...cart needs to be an array to loop through
   if (!cart || !Array.isArray(cart)) {
     console.error("Cart is not loaded properly.");
     return;
