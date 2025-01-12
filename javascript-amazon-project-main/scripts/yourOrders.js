@@ -15,6 +15,7 @@ document.addEventListener("DOMContentLoaded", () => {
   document.getElementById("current-date").textContent = currentDate;
   //AMOUNT
   displayFinalOrderPaymentTotal();
+  console.log(displayFinalOrderPaymentTotal());
   //ORDER ID
   const uniqueOrderId = document.getElementById("unique-order-id");
   uniqueOrderId.innerHTML = Math.floor(Math.random() * 1000000);
@@ -32,8 +33,13 @@ export function updateCartQuantity() {
 }
 
 export function displayFinalOrderPaymentTotal() {
-  const orderTotalAmount = document.getElementById("order-total-amount");
-  orderTotalAmount.innerHTML = renderFinalOrderPaymentSummary();
+  //used class
+  const totalAmountPostOrder = renderFinalOrderPaymentSummary();
+  document.querySelector(".js-order-total-amount").innerHTML =
+    totalAmountPostOrder;
+  //used id
+  // const orderTotalAmount = document.getElementById("order-total-amount");
+  // orderTotalAmount.innerHTML = renderFinalOrderPaymentSummary();
 }
 
 export function displayYourOrders() {
