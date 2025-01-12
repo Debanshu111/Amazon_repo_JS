@@ -16,11 +16,9 @@ import {
 import { renderPaymentSummary } from "./paymentSummary.js";
 import { renderCheckoutHeader } from "./checkoutHeader.js";
 
-export let cartSummaryHTML = "";
-
 //To load the delivery Date option from the radio button options instantaneously, we need to re-run the HTML, so put it in a function
 export function renderOrderSummary() {
-  cartSummaryHTML = "";
+  let cartSummaryHTML = "";
   let isloader = true;
 
   cart.forEach((cartItem) => {
