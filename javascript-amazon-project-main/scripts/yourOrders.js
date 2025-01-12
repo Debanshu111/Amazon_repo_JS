@@ -27,7 +27,7 @@ document.addEventListener("DOMContentLoaded", () => {
   //   yourOrdersSummaryHTML;
   // console.log(yourOrdersSummaryHTML);
 
-  // displayYourOrders();
+  displayYourOrders();
 });
 
 //FUNCTIONs
@@ -50,9 +50,16 @@ export function displayFinalOrderPaymentTotal() {
 export function displayYourOrders() {
   let yourOrdersSummaryHTML = "";
 
+  if (!cart || !Array.isArray(cart)) {
+    console.error("Cart is not loaded properly.");
+    return;
+  }
+
   cart.forEach((cartItem) => {
     const productId = cartItem.productId;
+    console.log("Product ID:", productId);
     const matchingProduct = getProduct(productId);
+    console.log("Matching Product:", matchingProduct);
 
     if (matchingProduct) {
       yourOrdersSummaryHTML =
