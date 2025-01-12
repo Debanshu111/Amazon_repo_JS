@@ -8,12 +8,13 @@ import dayjs from "https://unpkg.com/dayjs@1.11.10/esm/index.js";
 import { loadCart } from "../data/cart.js";
 
 document.addEventListener("DOMContentLoaded", () => {
+  // CART ICON
+  updateCartQuantity();
   //DATE
   const currentDate = dayjs().format("MMMM D, YYYY");
   document.getElementById("current-date").textContent = currentDate;
   //AMOUNT
-  const orderTotalAmount = document.getElementById("order-total-amount");
-  orderTotalAmount.innerHTML = renderFinalOrderPaymentSummary();
+  displayFinalOrderPaymentTotal();
   //ORDER ID
   const uniqueOrderId = document.getElementById("unique-order-id");
   uniqueOrderId.innerHTML = Math.floor(Math.random() * 1000000);
@@ -21,16 +22,18 @@ document.addEventListener("DOMContentLoaded", () => {
   //     // Load the generated HTML from localStorage and insert it into the element
   //   const yourOrdersSummaryHTML = localStorage.getItem("yourOrdersSummaryHTML");
   //   document.querySelector(".js-your-orders-summary").innerHTML = yourOrdersSummaryHTML;
-
-  // CART ICON
-  updateCartQuantity();
 });
 
 //FUNCTIONs
 
-function updateCartQuantity() {
+export function updateCartQuantity() {
   const cartQuantity = calculateCartQuantity();
   document.querySelector(".js-cart-Quantity").innerHTML = cartQuantity;
+}
+
+export function displayFinalOrderPaymentTotal() {
+  const orderTotalAmount = document.getElementById("order-total-amount");
+  orderTotalAmount.innerHTML = renderFinalOrderPaymentSummary();
 }
 
 export function displayYourOrders() {
@@ -83,4 +86,5 @@ export function displayYourOrders() {
     yourOrdersSummaryHTML;
 
   updateCartQuantity();
+  displayFinalOrderPaymentTotal();
 }
