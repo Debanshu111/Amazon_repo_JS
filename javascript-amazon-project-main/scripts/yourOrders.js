@@ -1,9 +1,7 @@
 import { cart, calculateCartQuantity } from "../data/cart.js";
-import { getProduct, products } from "../data/products.js";
+import { getProduct } from "../data/products.js";
 import { renderFinalOrderPaymentSummary } from "./checkout/paymentSummary.js";
 import dayjs from "https://unpkg.com/dayjs@1.11.10/esm/index.js";
-
-import { loadCart } from "../data/cart.js";
 
 document.addEventListener("DOMContentLoaded", () => {
   // CART ICON
@@ -18,8 +16,18 @@ document.addEventListener("DOMContentLoaded", () => {
   uniqueOrderId.innerHTML = Math.floor(Math.random() * 1000000);
 
   //     // Load the generated HTML from localStorage and insert it into the element
-  //   const yourOrdersSummaryHTML = localStorage.getItem("yourOrdersSummaryHTML");
-  //   document.querySelector(".js-your-orders-summary").innerHTML = yourOrdersSummaryHTML;
+  // T1
+  // const yourOrdersSummaryHTML = localStorage.getItem("yourOrdersSummaryHTML");
+  // document.querySelector(".js-your-orders-summary").innerHTML =
+  //   yourOrdersSummaryHTML;
+  // console.log(yourOrdersSummaryHTML);
+  //T2
+  // const yourOrdersSummaryHTML = displayYourOrders();
+  // document.querySelector(".js-your-orders-summary").innerHTML =
+  //   yourOrdersSummaryHTML;
+  // console.log(yourOrdersSummaryHTML);
+
+  // displayYourOrders();
 });
 
 //FUNCTIONs
@@ -53,7 +61,7 @@ export function displayYourOrders() {
       <div class="ordered-products-details js-ordered-products-details-${matchingProduct.id}">
               <img
                 class="product-image-container"
-                src=${matchingProduct.image}
+                src="${matchingProduct.image}"
               />
 
               <div class="product-details">
@@ -92,6 +100,7 @@ export function displayYourOrders() {
 
   document.querySelector(".js-your-orders-summary").innerHTML =
     yourOrdersSummaryHTML;
+  // localStorage.setItem("yourOrdersSummaryHTML", yourOrdersSummaryHTML);
 
   updateCartQuantity();
   displayFinalOrderPaymentTotal();
