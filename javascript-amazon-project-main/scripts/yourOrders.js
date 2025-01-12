@@ -1,7 +1,5 @@
 import { cart, calculateCartQuantity } from "../data/cart.js";
-import { products } from "../data/products.js";
-// import { renderCheckoutHeader } from "./checkout/checkoutHeader.js";
-import { renderOrderSummary } from "./checkout/orderSummary.js";
+import { getProduct, products } from "../data/products.js";
 import { renderFinalOrderPaymentSummary } from "./checkout/paymentSummary.js";
 import dayjs from "https://unpkg.com/dayjs@1.11.10/esm/index.js";
 
@@ -15,7 +13,6 @@ document.addEventListener("DOMContentLoaded", () => {
   document.getElementById("current-date").textContent = currentDate;
   //AMOUNT
   displayFinalOrderPaymentTotal();
-  console.log(displayFinalOrderPaymentTotal());
   //ORDER ID
   const uniqueOrderId = document.getElementById("unique-order-id");
   uniqueOrderId.innerHTML = Math.floor(Math.random() * 1000000);
@@ -47,17 +44,13 @@ export function displayYourOrders() {
 
   cart.forEach((cartItem) => {
     const productId = cartItem.productId;
-    let matchingProduct;
-    products.forEach((product) => {
-      if (product.id === productId) {
-        matchingProduct = product;
-      }
-    });
+    const matchingProduct = getProduct(productId);
 
-    yourOrdersSummaryHTML =
-      yourOrdersSummaryHTML +
-      `
-      <div class="ordered-products-details">
+    if (matchingProduct) {
+      yourOrdersSummaryHTML =
+        yourOrdersSummaryHTML +
+        `
+      <div class="ordered-products-details js-ordered-products-details-${matchingProduct.id}">
               <img
                 class="product-image-container"
                 src=${matchingProduct.image}
@@ -68,7 +61,15 @@ export function displayYourOrders() {
                 ${matchingProduct.name}
                 </div>
                 <div class="product-delivery-date">Arriving on: August 15</div>
-                <div class="product-quantity">Quantity:  ${cartItem.quantity}</div>
+                <div class="product-quantity">
+                <span>
+                    Quantity:
+                    <span
+                      class="quantity-label js-quantity-label-${matchingProduct.id}"
+                      >${cartItem.quantity}</span
+                    >
+                  </span>
+                </div>
                 <button class="buy-again-button button-primary">
                   <img
                     class="buy-again-icon"
@@ -86,6 +87,7 @@ export function displayYourOrders() {
                 </a>
               </div>
             </div>`;
+    }
   });
 
   document.querySelector(".js-your-orders-summary").innerHTML =
