@@ -1,7 +1,23 @@
 import { cart, calculateCartQuantity } from "../data/cart.js";
-import { getProduct } from "../data/products.js";
+import { products, getProduct, loadProductsFetch } from "../data/products.js";
 import { renderFinalOrderPaymentSummary } from "./checkout/paymentSummary.js";
 import dayjs from "https://unpkg.com/dayjs@1.11.10/esm/index.js";
+
+async function loadPage() {
+  try {
+    await loadProductsFetch();
+    const value = await new Promise((resolve, reject) => {
+      // throw "error2";
+      loadCart(() => {
+        reject("error3");
+        // resolve("value3");
+      });
+    });
+  } catch (error) {
+    // console.log("unexpected error. please try again later");
+  }
+}
+loadPage();
 
 document.addEventListener("DOMContentLoaded", () => {
   // CART ICON
@@ -58,30 +74,37 @@ export function displayYourOrders() {
 
   cart.forEach((cartItem) => {
     const productId = cartItem.productId;
-    console.log("Product ID:", productId);
-    const matchingProduct = getProduct(productId);
-    console.log("Matching Product:", matchingProduct);
+    console.log(productId);
 
-    if (matchingProduct) {
-      yourOrdersSummaryHTML =
-        yourOrdersSummaryHTML +
-        `
-      <div class="ordered-products-details js-ordered-products-details-${matchingProduct.id}">
+    let matchingProduct;
+    products.forEach((product) => {
+      if (product.id === productId) {
+        matchingProduct = product;
+      }
+    });
+    // const matchingProduct = getProduct(productId);
+    console.log(cartItem);
+
+    // if (matchingProduct) {
+    yourOrdersSummaryHTML =
+      yourOrdersSummaryHTML +
+      `
+      <div class="ordered-products-details js-ordered-products-details">
               <img
                 class="product-image-container"
-                src="${matchingProduct.image}"
+                src="images/products/athletic-cotton-socks-6-pairs.jpg"
               />
 
               <div class="product-details">
                 <div class="product-name">
-                ${matchingProduct.name}
+                Black and Gray Athletic Cotton Socks - 6 Pairs
                 </div>
                 <div class="product-delivery-date">Arriving on: August 15</div>
                 <div class="product-quantity">
                 <span>
                     Quantity:
                     <span
-                      class="quantity-label js-quantity-label-${matchingProduct.id}"
+                      class="quantity-label js-quantity-label"
                       >${cartItem.quantity}</span
                     >
                   </span>
@@ -103,7 +126,7 @@ export function displayYourOrders() {
                 </a>
               </div>
             </div>`;
-    }
+    // }
   });
 
   document.querySelector(".js-your-orders-summary").innerHTML =
