@@ -92,7 +92,7 @@
   border-bottom-left-radius: 8px;
   border-bottom-right-radius: 8px;
 
-  display: flex;
+  display: grid;
   /* flex-wrap: nowrap; */
   justify-content: space-between;
   /* grid-template-columns: 110px 1fr 220px; */
@@ -100,9 +100,9 @@
   row-gap: 60px;
   align-items: center;
 }
-.ordered-products-details {
-  max-width: 100%;
-}
+/* .ordered-products-details {
+  width: 600px;
+} */
 
 @media (max-width: 800px) {
   .order-details-grid {
