@@ -9,7 +9,7 @@ async function loadPage() {
   try {
     const response = await fetch("https://supersimplebackend.dev/products");
     products = await response.json();
-    console.log(products);
+    // console.log(products);
 
     // Displaying Your Orders after products are loaded
     displayYourOrders();
@@ -54,14 +54,27 @@ export function displayYourOrders() {
 
   cart.forEach((cartItem) => {
     const productId = cartItem.productId;
-    console.log("Product ID:", productId);
+    // console.log("Product ID:", productId);
 
     const matchingProduct = getProduct(productId);
-    console.log("Matching Product:", matchingProduct);
+    // console.log("Matching Product:", matchingProduct);
 
     const deliveryOption = getDeliveryOption(cartItem.deliveryOptionId);
-    console.log("Delivery Option:", deliveryOption);
-    if (matchingProduct) {
+
+    if (matchingProduct && deliveryOption) {
+      const orderDate = dayjs();
+
+      const orderArrivalDay = orderDate
+        .add(deliveryOption.deliveryDays, "day")
+        .format("dddd, MMMM D");
+      console.log(
+        "Trial",
+        cartItem,
+        deliveryOption,
+        orderDate,
+        orderArrivalDay
+      );
+
       yourOrdersSummaryHTML =
         yourOrdersSummaryHTML +
         `
@@ -69,20 +82,23 @@ export function displayYourOrders() {
 <img class="product-image-container" src=${matchingProduct.image} />
 <div class="product-details">
 <div class="product-name">${matchingProduct.name}</div>
-<div class="product-delivery-date">Arriving on: ${cartItem.deliveryOptionId}</div>
+<div class="product-delivery-date">Arriving on: ${orderArrivalDay}</div>
 <div class="product-quantity">
 <span>Quantity: <span class="quantity-label js-quantity-label-${matchingProduct.id}">${cartItem.quantity}</span></span>
 </div>
+</div>
+<div>
 <button class="buy-again-button button-primary">
 <img class="buy-again-icon" src="images/icons/buy-again.png" />
 <span class="buy-again-message">Buy it again</span>
 </button>
-</div>
 <div class="product-actions">
 <a href="tracking.html">
 <button class="track-package-button button-secondary">Track package</button>
 </a>
 </div>
+</div>
+
 </div>`;
     }
   });
