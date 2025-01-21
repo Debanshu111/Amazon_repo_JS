@@ -40,13 +40,13 @@ export function getProduct(productId) {
 
 export function trackYourOrders() {
   let trackYourOrdersHTML = "";
+  const trackingProductId = localStorage.getItem("trackingProductId");
+
   cart.forEach((cartItem) => {
     const productId = cartItem.productId;
-    // console.log("Product ID:", productId);
+    if (productId !== trackingProductId) return; //only to get the particular product that is being tracked from localStorage
 
     const matchingProduct = getProduct(productId);
-    // console.log("Matching Product:", matchingProduct);
-
     const deliveryOption = getDeliveryOption(cartItem.deliveryOptionId);
 
     if (matchingProduct && deliveryOption) {
