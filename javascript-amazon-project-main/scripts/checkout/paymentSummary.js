@@ -20,6 +20,7 @@ export function renderPaymentSummary() {
   const totalBeforeTaxCents = productPriceCents + shippingPriceCents;
   const taxCents = (totalBeforeTaxCents * 0.1).toFixed(2);
   const totalCents = Number(totalBeforeTaxCents) + Number(taxCents);
+  localStorage.setItem("totalCents", totalCents); // Store totalCents in localStorage
   const paymentSummaryHTML = `<div class="payment-summary-title">Order Summary</div>
 
           <div class="payment-summary-row">
@@ -103,5 +104,6 @@ export function renderFinalOrderPaymentSummary() {
   const totalBeforeTaxCents = productPriceCents + shippingPriceCents;
   const taxCents = (totalBeforeTaxCents * 0.1).toFixed(2);
   const totalCents = Number(totalBeforeTaxCents) + Number(taxCents);
+  localStorage.setItem("totalCents", totalCents); // Store totalCents in localStorage
   return `$${formatCurrency(totalCents)}`;
 }

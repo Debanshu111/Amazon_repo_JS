@@ -1,6 +1,10 @@
 import { cart, calculateCartQuantity } from "../data/cart.js";
 import { renderFinalOrderPaymentSummary } from "./checkout/paymentSummary.js";
-import { getDeliveryOption } from "../data/deliveryOptions.js";
+import {
+  getDeliveryOption,
+  calculateDeliveryDate,
+} from "../data/deliveryOptions.js";
+import { formatCurrency } from "../utils/money.js";
 import dayjs from "https://unpkg.com/dayjs@1.11.10/esm/index.js";
 
 let products = [];
@@ -26,7 +30,8 @@ document.addEventListener("DOMContentLoaded", () => {
   document.getElementById("current-date").textContent = currentDate;
   //AMOUNT
   const orderTotalAmount = document.getElementById("order-total-amount");
-  orderTotalAmount.innerHTML = renderFinalOrderPaymentSummary();
+  const totalCents = localStorage.getItem("totalCents"); // Retrieve totalCents from localStorage
+  orderTotalAmount.innerHTML = `$${formatCurrency(totalCents)}`;
   //ORDER ID
   const uniqueOrderId = document.getElementById("unique-order-id");
   uniqueOrderId.innerHTML = Math.floor(Math.random() * 1000000);
@@ -62,18 +67,7 @@ export function displayYourOrders() {
     const deliveryOption = getDeliveryOption(cartItem.deliveryOptionId);
 
     if (matchingProduct && deliveryOption) {
-      const orderDate = dayjs();
-
-      const orderArrivalDay = orderDate
-        .add(deliveryOption.deliveryDays, "day")
-        .format("dddd, MMMM D");
-      console.log(
-        "Trial",
-        cartItem,
-        deliveryOption,
-        orderDate,
-        orderArrivalDay
-      );
+      const deliveryDate = calculateDeliveryDate(deliveryOption);
 
       yourOrdersSummaryHTML =
         yourOrdersSummaryHTML +
@@ -82,7 +76,7 @@ export function displayYourOrders() {
 <img class="product-image-container" src=${matchingProduct.image} />
 <div class="product-details">
 <div class="product-name">${matchingProduct.name}</div>
-<div class="product-delivery-date">Arriving on: ${orderArrivalDay}</div>
+<div class="product-delivery-date">Arriving on: ${deliveryDate}</div>
 <div class="product-quantity">
 <span>Quantity: <span class="quantity-label js-quantity-label-${matchingProduct.id}">${cartItem.quantity}</span></span>
 </div>

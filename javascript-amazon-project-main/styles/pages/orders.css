@@ -96,10 +96,13 @@
   /* flex-wrap: nowrap; */
   justify-content: space-between;
   /* grid-template-columns: 110px 1fr 220px; */
-  column-gap: 35px;
+  /* column-gap: 35px; */
   row-gap: 60px;
   align-items: center;
 }
+/* .product-details {
+  width: 50%;
+} */
 /* .ordered-products-details {
   width: 600px;
 } */
