@@ -87,7 +87,7 @@ export function displayYourOrders() {
 <span class="buy-again-message">Buy it again</span>
 </button>
 <div class="product-actions">
-<a href="tracking.html">
+<a href="tracking.html" class="js-track-package" data-product-id="${matchingProduct.id}">
 <button class="track-package-button button-secondary">Track package</button>
 </a>
 </div>
@@ -100,4 +100,11 @@ export function displayYourOrders() {
   document.querySelector(".js-your-orders-summary").innerHTML =
     yourOrdersSummaryHTML;
   localStorage.setItem("yourOrdersSummaryHTML", yourOrdersSummaryHTML);
+
+  document.querySelectorAll(".js-track-package").forEach((element) => {
+    element.addEventListener("click", (event) => {
+      const productId = element.dataset.productId;
+      localStorage.setItem("trackingProductId", productId);
+    });
+  });
 }
