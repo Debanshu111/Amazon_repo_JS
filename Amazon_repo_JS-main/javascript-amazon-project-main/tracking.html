@@ -1,11 +1,8 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>My Demo Amazon Project</title>
+    <title>Tracking</title>
 
-    <!-- This code is needed for responsive design to work.
-      (Responsive design = make the website look good on
-      smaller screen sizes like a phone or a tablet). -->
     <meta name="viewport" content="width=device-width, initial-scale=1" />
 
     <!-- Load a font called Roboto from Google Fonts. -->
@@ -19,7 +16,7 @@
     <!-- Here are the CSS files for this page. -->
     <link rel="stylesheet" href="styles/shared/general.css" />
     <link rel="stylesheet" href="styles/shared/amazon-header.css" />
-    <link rel="stylesheet" href="styles/pages/amazon.css" />
+    <link rel="stylesheet" href="styles/pages/tracking.css" />
   </head>
   <body>
     <div class="amazon-header">
@@ -56,13 +53,25 @@
     </div>
 
     <div class="main">
-      <div class="products-grid js-products-grid"></div>
+      <div class="order-tracking">
+        <a class="back-to-orders-link link-primary" href="orders.html">
+          View all orders
+        </a>
+        <div class="track-my-product js-track-my-product"></div>
+        <div class="progress-labels-container">
+          <div class="progress-label">Preparing</div>
+          <div class="progress-label current-status">Shipped</div>
+          <div class="progress-label">Delivered</div>
+        </div>
+
+        <div class="progress-bar-container">
+          <div class="progress-bar"></div>
+        </div>
+        <div
+          class="product-details-container js-product-details-container"
+        ></div>
+      </div>
     </div>
-    <script type="module" src="scripts/amazon.js"></script>
-    <!--Module is used for ... 
-    export import for files,
-    avoid naming conflicts,
-    need not worry about order now;
-    Modules work only for LIVE SERVER -->
+    <script type="module" src="scripts/trackPackage.js"></script>
   </body>
 </html>

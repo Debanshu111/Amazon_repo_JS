@@ -1,5 +1,4 @@
-// export const cart = [
-export let cart; //Need to get cart from Local Storage but since Cart isn't sting normally so it's made back to array using JSON.parse
+export let cart;
 
 loadFromStorage();
 
@@ -25,7 +24,7 @@ export function loadFromStorage() {
 //LOCAL STORAGE FUNCTION
 
 export function saveToStorage() {
-  localStorage.setItem("cart", JSON.stringify(cart)); //Saving to local storage(only saves strings, so cart has been converted to string)
+  localStorage.setItem("cart", JSON.stringify(cart));
 }
 
 //ADD TO CART FUNCTION
@@ -37,26 +36,23 @@ export function addToCart(productId) {
       matchingItem = cartItem;
     }
   });
-  // console.log(productId);
 
   //QUANTITY DROPDOWN
   const quantitySelector = document.querySelector(
     `.js-quantity-selector-${productId}`
   );
   const quantity = Number(quantitySelector.value);
-  //Cart Item already in Cart?
   if (matchingItem) {
     matchingItem.quantity = matchingItem.quantity + quantity;
   } else {
     cart.push({
       productId: productId,
       quantity: quantity,
-      deliveryOptionId: "1", //used  1 for now...need to change later
+      deliveryOptionId: "1",
     });
   }
   saveToStorage();
 }
-// console.log(cart);
 
 //REMOVE FROM CART FUNCTION
 
@@ -73,13 +69,14 @@ export function removeFromCart(productId) {
   saveToStorage();
 }
 
-//CALCULATE CART QUANTITY FUNCTION used at multiple files, to optiimize
+//CALCULATE CART QUANTITY FUNCTION
 export function calculateCartQuantity() {
   let cartQuantity = 0;
   cart.forEach((cartItem) => {
     cartQuantity = cartQuantity + cartItem.quantity;
   });
   return cartQuantity;
+  // return cart.reduce((total, cartItem) => total + cartItem.quantity, 0);
 }
 
 //UPDATE QUANTITY FUNCTION
@@ -110,3 +107,16 @@ export function updateDeliveryOption(productId, deliveryOptionId) {
 
   saveToStorage();
 }
+
+//Load CART from Backend
+export function loadCart(functionsBackEnd) {
+  const xhr = new XMLHttpRequest(); //New Rqst Obj generated
+
+  //To load after sending
+  xhr.addEventListener("load", () => {
+    functionsBackEnd(); //Callback- a function to run in future
+  });
+  xhr.open("GET", "https://supersimplebackend.dev/cart");
+  xhr.send(); //async, so it'll only send not wait for the request
+}
+// loadProducts();

@@ -1,20 +1,15 @@
-//classes looks like the object that it generates, has both properties and methods(func.)
-//has constructor(let us run setup codes)[helps to group]
-
 class Cart {
   cartItems = undefined;
-  #localStorageKey = undefined; //# is used to make it private, to be used inside the class
+  #localStorageKey = undefined;
 
-  //after creating the Cart obj., need setup code
   constructor(localStorageKey) {
-    this.#localStorageKey = localStorageKey; //we declare the parameter
+    this.#localStorageKey = localStorageKey;
     this.#loadFromStorage();
   }
 
   //LOAD FROM STORAGE FUNCTION
   #loadFromStorage() {
-    //made private
-    this.cartItems = JSON.parse(localStorage.getItem(this.#localStorageKey)); //since localStorageKey doesn't exist inside the method(func inside class), we declared it above.
+    this.cartItems = JSON.parse(localStorage.getItem(this.#localStorageKey));
 
     if (!this.cartItems) {
       this.cartItems = [
@@ -34,7 +29,7 @@ class Cart {
 
   //LOCAL STORAGE FUNCTION
   saveToStorage() {
-    localStorage.setItem(this.#localStorageKey, JSON.stringify(this.cartItems)); //Saving to local storage(only saves strings, so cart has been converted to string)
+    localStorage.setItem(this.#localStorageKey, JSON.stringify(this.cartItems));
   }
 
   //ADD TO CART FUNCTION
@@ -78,7 +73,7 @@ class Cart {
     this.saveToStorage();
   }
 
-  //CALCULATE CART QUANTITY FUNCTION used at multiple files, to optiimize
+  //CALCULATE CART QUANTITY FUNCTION
   calculateCartQuantity() {
     let cartQuantity = 0;
     this.cartItems.forEach((cartItem) => {
@@ -114,7 +109,7 @@ class Cart {
   }
 }
 
-const cart = new Cart("cart-oop"); //new obj generated == each obj created from class is called INSTANCE
+const cart = new Cart("cart-oop");
 const businessCart = new Cart("cart-business");
 
 console.log(cart, businessCart);

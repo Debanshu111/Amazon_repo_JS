@@ -3,9 +3,6 @@
   <head>
     <title>Checkout</title>
 
-    <!-- This code is needed for responsive design to work.
-      (Responsive design = make the website look good on
-      smaller screen sizes like a phone or a tablet). -->
     <meta name="viewport" content="width=device-width, initial-scale=1" />
 
     <!-- Load a font called Roboto from Google Fonts. -->
@@ -25,15 +22,15 @@
     <div class="checkout-header js-checkout-header"></div>
 
     <div class="main">
-      <div class="page-title">Review your order</div>
+      <div class="flex">
+        <span class="page-title">Review your order</span>
+      </div>
 
       <div class="checkout-grid">
         <div class="order-summary js-order-summary"></div>
-
         <div class="payment-summary js-payment-summary"></div>
       </div>
     </div>
-    <!-- <script src="https://unpkg.com/dayjs@1.11.10/dayjs.min.js"></script> -->
     <script type="module" src="scripts/checkout.js"></script>
   </body>
 </html>
